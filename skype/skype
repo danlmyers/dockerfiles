@@ -1,8 +1,10 @@
 docker run --rm \
 	-v /tmp/.X11-unix:/tmp/.X11-unix:ro \
 	-v /run/user/${UID}/pulse:/run/user/${UID}/pulse \
+	-v /dev/shm:/dev/shm \
 	-v ${HOME}/.Skype:/home/user/.Skype \
 	-v ${HOME}/Downloads:/home/user/Downloads \
 	-e DISPLAY="unix$DISPLAY" \
 	-e HOME=/home/user \
+	-e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
 	moird/skype:latest &
