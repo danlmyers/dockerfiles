@@ -1,10 +1,22 @@
-docker run --rm \
-	-v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-	-v /run/user/${UID}/pulse:/run/user/${UID}/pulse \
-	-v /dev/shm:/dev/shm \
-	-v ${HOME}/.Skype:/home/user/.Skype \
-	-v ${HOME}/Downloads:/home/user/Downloads \
-	-e DISPLAY="unix$DISPLAY" \
-	-e HOME=/home/user \
-	-e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
-	moird/skype:latest &
+#!/bin/bash
+set -e
+
+if docker inspect -f "{{ .Name }}" skype | grep '/skype'; then
+        docker restart skype
+else
+        USER_UID=$(id -u)
+        USER_GID=$(id -g)
+
+        docker run -it --rm \
+                --privileged \
+                --env=USER_UID=$USER_UID \
+                --env=USER_GID=$USER_GID \
+                --env=DISPLAY=unix$DISPLAY \
+                --volume=/tmp/.X11-unix:/tmp/.X11-unix:ro \
+                --volume=/run/user/$USER_UID/pulse:/run/pulse:ro \
+                --volume=/dev/video0:/dev/video0:rw \
+		--volume=${HOME}/.Skype:/home/skype/.Skype \
+		--volume=${HOME}/Downloads:/home/skype/Downloads \
+                --name skype \
+                skype 
+fi
