@@ -15,8 +15,12 @@ docker run -v /documents moird/mkdocs mkdocs new .
 
 ### Mkdocs Configuration ###
 the mkdocs.yaml file is the primary source of configuration for mkdocs, you can specify the pages layout, and additional settings like port.  It is suggested to set at least the dev_addr to 9010:
-```shell
+```yaml
 dev_addr: 0.0.0.0:9010
+```
+The site files can also be configured to be built and served from /site
+```yaml
+site_dir: /site
 ```
 
 For example the entire file might look like this:
@@ -24,6 +28,7 @@ For example the entire file might look like this:
 site_name: Dockerfile Documentation
 repo_url: https://github.com/moird/dockerfiles
 dev_addr: 0.0.0.0:9010
+site_dir: /site
 
 pages:
   - index.md

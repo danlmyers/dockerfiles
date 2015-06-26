@@ -5,7 +5,8 @@ COPY ./requirements.txt /
 EXPOSE 9010
 RUN pip install -r /requirements.txt
 
-run mkdir /documents
+RUN mkdir /documents
+RUN mkdir /site
 WORKDIR /documents
 
 CMD mkdocs serve
