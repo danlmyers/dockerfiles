@@ -1,9 +1,7 @@
 FROM python:3.4
 
-COPY ./requirements.txt /
-
 EXPOSE 8000
-RUN pip install -r /requirements.txt
+RUN pip install mkdocs
 
 RUN mkdir /documents
 RUN mkdir /site
